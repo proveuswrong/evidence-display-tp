@@ -3,10 +3,24 @@
 <style>
     @import "./style.scss";
 </style>
-<script type="module">
-  import value from "./other.js";
+<h1 id="title"></h1>
+<p id="description"></p>
 
-  console.log(value);
+<script type="module">
+  import {injectedArgs} from "./obtainInjectedArgs.js";
+  import {getClaimByDisputeID, getClaimContent} from "./arbitrableSpecificLogic.js";
+  import {subgraphURL} from "./constants";
+
+  getClaimByDisputeID(subgraphURL, injectedArgs.disputeID).then(function (data) {
+    const claim = data
+    getClaimContent(claim.claimID).then(function (claimContent) {
+      document.getElementById('title').innerText = claimContent.title
+      document.getElementById('description').innerText = claimContent.description
+
+    }, console.error)
+
+  }, console.error)
+
 </script>
 </body>
 </html>
