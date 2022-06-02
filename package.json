@@ -1,8 +1,15 @@
 {
   "dependencies": {
+    "@kleros/file-to-ipfs": "^0.3.2",
     "parcel": "^2.6.0"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "2.6.0"
-  }
+  },
+  "scripts": {
+    "build": "parcel build",
+    "start": "parcel",
+    "pin": "file-to-ipfs -f dist/index.html"
+  },
+  "source": "src/index.html"
 }
