@@ -7,24 +7,22 @@
 <p id="description"></p>
 
 <script type="module">
-  import {injectedArgs} from "./obtainInjectedArgs.js";
-  import {getClaimByDisputeID, getClaimContent} from "./arbitrableSpecificLogic.js";
-  import {subgraphURL} from "./constants";
+  import { injectedArgs } from "./obtainInjectedArgs.js";
+  import { getArticleByDisputeID, getArticleContent } from "./arbitrableSpecificLogic.js";
+  import { subgraphURL } from "./constants";
 
   if (!injectedArgs.disputeID) {
-    console.error("DisputeID is missing and evidence display can't function without it.")
+    console.error("DisputeID is missing and evidence display can't function without it.");
   } else {
-    getClaimByDisputeID(subgraphURL, injectedArgs.disputeID).then(function (data) {
-      const claim = data
-      getClaimContent(claim.claimID).then(function (claimContent) {
-        document.getElementById('title').innerText = claimContent.title
-        document.getElementById('description').innerText = claimContent.description
-
-      }, console.error)
-
-    }, console.error)
+    getArticleByDisputeID(subgraphURL, injectedArgs.disputeID).then(function(data) {
+      const article = data.article;
+      console.log(article);
+      getArticleContent(article.articleID).then(function(articleContent) {
+        document.getElementById("title").innerText = articleContent.title;
+        document.getElementById("description").innerText = articleContent.description;
+      }, console.error);
+    }, console.error);
   }
-
 </script>
 </body>
 </html>

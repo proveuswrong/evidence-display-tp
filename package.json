@@ -4,12 +4,17 @@
     "parcel": "^2.6.0"
   },
   "devDependencies": {
-    "@parcel/transformer-sass": "2.6.0"
+    "@parcel/transformer-sass": "2.6.0",
+    "prettier": "^2.8.8"
   },
   "scripts": {
     "build": "parcel build",
     "start": "parcel",
     "pin": "file-to-ipfs -f dist/index.html"
   },
-  "source": "src/index.html"
+  "source": "src/index.html",
+  "prettier": {
+    "tabWidth": 2,
+    "printWidth": 120
+  }
 }

@@ -1,2 +1,4 @@
-# evidence-display
-Evidence display module of PMW. Required foir MetaEvidence files of Kleros.
+# evidence-display-tp
+
+Evidence display module of the Truth Post. Required for MetaEvidence files of Kleros.
+

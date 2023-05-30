@@ -1,4 +1,4 @@
-import {ipfsGateway} from "./constants";
+import { ipfsGateway } from "./constants";
 
 const queryTemplate = (endpoint, query) =>
   fetch(endpoint, {
@@ -11,38 +11,37 @@ const queryTemplate = (endpoint, query) =>
     }),
     method: "POST",
     mode: "cors",
-  }).then(r => r.json()).then(json => json.data)
+  })
+    .then((r) => r.json())
+    .then((json) => json.data);
 
+export const getArticleByDisputeID = async (subgraphEndpoint, disputeID) => {
+  return queryTemplate(
+    subgraphEndpoint,
+    `{
+        disputeEntities(where: {id: "${disputeID}"}) {
+            id
+            article{
+                id
+                articleID
+                owner
+                category
+                bounty
+            }
+        }
+    }`
+  )
+    .then((data) => {
+      return data.disputeEntities[0];
+    })
+    .catch((err) => console.error);
+};
 
-export const getClaimByDisputeID = async (subgraphEndpoint, disputeID) => {
+export const getArticleContent = (articleID) =>
+  fetch(ipfsGateway + articleID).then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not OK");
+    }
 
-  return queryTemplate(subgraphEndpoint, `{
-  claims(where: {disputeID: "${disputeID}"}) {
-    id
-    claimID
-    owner
-    category
-    bounty
-    status
-    lastBalanceUpdate
-    disputeID
-    withdrawalPermittedAt
-    lastCalculatedScore
-    arbitrator
-    arbitratorExtraData
-  }
-
-  }`).then(data => {
-    return data.claims[0]
-  }).catch(err => console.error)
-}
-
-export const getClaimContent = (claimID) => fetch(ipfsGateway + claimID).then((response => {
-  if (!response.ok) {
-    throw new Error('Network response was not OK');
-  }
-
-  return response.json().then()
-}))
-
-
+    return response.json().then();
+  });
