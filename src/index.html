@@ -9,12 +9,15 @@
 <script type="module">
   import { injectedArgs } from "./obtainInjectedArgs.js";
   import { getArticleByDisputeID, getArticleContent } from "./arbitrableSpecificLogic.js";
-  import { subgraphURL } from "./constants";
+  import { subgraphEndpoints } from "./constants";
 
-  if (!injectedArgs.disputeID) {
-    console.error("DisputeID is missing and evidence display can't function without it.");
+  const { disputeID, arbitrableChainID } = injectedArgs;
+
+  if (!disputeID || !arbitrableChainID) {
+    console.error("One of the required arguments is missing and evidence display can't function without it.");
   } else {
-    getArticleByDisputeID(subgraphURL, injectedArgs.disputeID).then(function(data) {
+    getArticleByDisputeID(subgraphEndpoints[arbitrableChainID], disputeID).then(function(data) {
+      console.log(data);
       const article = data.article;
       console.log(article);
       getArticleContent(article.articleID).then(function(articleContent) {
